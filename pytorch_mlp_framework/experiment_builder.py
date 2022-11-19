@@ -157,9 +157,11 @@ class ExperimentBuilder(nn.Module):
         for name, params in named_parameters:
             if 'bias' not in name:
                 if 'logit' in name:
-                    s = 'weight_' + name.split('.')[1]
+                    #['logit_linear_layer', 'weight']
+                    s = 'weight_' + name.split('.')[0]
                 else:
-                    s = name.split('.')[2] + '_' + name.split('.')[4]
+                    #['layer_dict', 'input_conv', 'layer_dict', 'conv_0', 'weight']
+                    s = name.split('.')[1] + '_' + name.split('.')[3]
                 layers.append(s)
                 all_grads.append(params.grad.abs().mean())
         
